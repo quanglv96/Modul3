@@ -1,0 +1,52 @@
+use quanlybanhang;
+insert into customer value (1,'Minh Quan',10);
+insert into customer value (2,'Ngoc Oanh',20);
+insert into customer value (3,'Hong Ha',50);
+
+insert into Orrder value(1,1,'2006-21-03',null);
+insert into Orrder value(2,2,'2006-03-23',null);
+insert into Orrder value(3,1,'2006-03-16',null);
+
+insert into product value(1,'May Giat',3);
+insert into product value(2,'Tu Lanh',5);
+insert into product value(3,'Dieu Hoa',7);
+insert into product value(4,'Quat',1);
+insert into product value(5,'Bep Dien',2);
+
+insert into orderdetail value(1,1,3);
+insert into orderdetail value(1,3,7);
+insert into orderdetail value(1,4,2);
+insert into orderdetail value(2,1,1);
+insert into orderdetail value(3,1,8);
+insert into orderdetail value(2,5,4);
+insert into orderdetail value(2,3,3);
+-- Hiển thị các thông tin  gồm oID, oDate, oPrice của tất cả các hóa đơn trong bảng Order
+select order_ID,order_Date,order_TotalPrice from orrder;
+-- Hiển thị danh sách các khách hàng đã mua hàng, và danh sách sản phẩm được mua bởi các khách
+select * from orderdetail;
+-- Hiển thị tên những khách hàng không mua bất kỳ một sản phẩm nào
+select * from orderdetail
+where od_quantity=0;
+-- hiển thị hóa đơn
+-- cách 1
+select orderdetail.order_ID,orderdetail.product_ID,orderdetail.od_quantity,product.product_Price,(orderdetail.od_quantity* product.product_Price) as total
+from (orderdetail 
+inner join product on product.product_ID=orderdetail.product_ID);
+-- cách 2
+alter table orderdetail
+add column totalPrice double;
+update orderdetail
+set product_price= (select product_Price from product where orderdetail.product_ID=product.product_ID);
+update orderdetail
+set totalPrice=product_price*od_quantity;
+select * from orderdetail;
+-- cách 3:
+update product
+set product_Price=100;
+update orderdetail,product
+set orderdetail.product_price=product.product_Price,
+orderdetail.totalPrice=orderdetail.product_price*orderdetail.od_quantity
+where orderdetail.product_ID=product.product_ID;
+select * from product;
+select * from orderdetail;
+SET SQL_SAFE_UPDATES = 0;
