@@ -1,0 +1,17 @@
+use quanlysinhvien;
+-- hiển thị số lượng sinh viên ở từng nơi
+select Address, count(StudentID) as 'số lượng học viên' from student
+group by Address;
+-- Tính điểm trung bình các môn học của mỗi học viên
+select S.StudentID,S.StudentName,AVG(Mark) from Student S join Mark M on S.StudentID=M.StudentId
+group by s.StudentID,S.StudentNAme;
+-- điểm trung bình các môn học lớn hơn 15
+SELECT S.StudentId,S.StudentName, AVG(Mark)
+FROM Student S join Mark M on S.StudentId = M.StudentId
+GROUP BY S.StudentId, S.StudentName
+HAVING AVG(Mark) > 15;
+-- học viên có điểm trung bình lớn nhất
+SELECT S.StudentId, S.StudentName, AVG(Mark)
+FROM Student S join Mark M on S.StudentId = M.StudentId
+GROUP BY S.StudentId, S.StudentName
+HAVING AVG(Mark) >= ALL (SELECT AVG(Mark) FROM Mark GROUP BY Mark.StudentId);
