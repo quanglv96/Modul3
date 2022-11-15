@@ -1,0 +1,20 @@
+use quanlysinhvien;
+select* from student
+where StudentName like'h%'; -- tìm trong name có kí tự đầu tiền là h%    
+select * from class;
+select * from class
+where StartDate like '%-12-%'; -- C1.tìm trong date bắt đầu tháng 12. dạng cấu trúc
+select * from class
+where month(StartDate)=12; -- C2. dùng hàm month lấy tháng trong kiểu dữ liệu date time
+select * from subject;
+select * from subject
+where Credit>=3 AND Credit<=5;
+update Student
+set ClassID=2
+where StudentID=1;
+select * from student;
+select student.StudentName,subject.SubName,mark.Mark
+from(( mark
+inner join student on mark.StudentId=student.StudentID)
+inner join subject on mark.SubId=subject.SubId)
+order by mark.Mark ASC;
