@@ -22,10 +22,10 @@
     </style>
 </head>
 <body>
-<form>
+<form method="get" action="/login">
     <div class="login">
         <h2>Login</h2>
-        <input type="text" name="userName" size="30" placeholder="user name"/>
+        <input type="text" name="username" size="30" placeholder="user name"/>
         <input type="password" name="password" size="30" placeholder="Pass word"/>
         <input type="submit" value="Sign in"/>
     </div>
